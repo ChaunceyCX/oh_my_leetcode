@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * @lc app=leetcode.cn id=3 lang=java
  *
@@ -40,7 +43,22 @@
  */
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        
+        int start = 0;
+        int end = 0;
+        int length = 0;
+        int strLen = s.length();
+        Map<Character,Integer> map = new HashMap<>();
+        while(end<strLen){
+            
+            if( map.containsKey(s.charAt(end)) ) {
+                //取max是因为“abba”这种情况，start加1是因为要从重复出现处下一个开始
+                start = Math.max(map.get(s.charAt(end))+1, start);
+            }
+            //因为start+1，所以end-start时要加1
+            length = Math.max(length, end-start+1);
+            map.put(s.charAt(end),end++);
+        }
+        return length;
     }
 }
 
